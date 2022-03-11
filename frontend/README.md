@@ -9,7 +9,7 @@
 Runs the app in the development mode.
 Open http://localhost:8080 to view it in the browser.
 
-## Note: use nvm use
+#### Note: use nvm use
 
 This will set the right version of Node
 
