@@ -8,11 +8,15 @@ import { Text } from '@chakra-ui/react'
 import Routes from './routes/routes';
 import { BrowserRouter } from 'react-router-dom';
 
+import { AnimatePresence } from 'framer-motion';
+
 function App() {
   return (
     <BrowserRouter>
        <ChakraProvider theme={theme}>
-        <Routes />
+        <AnimatePresence exitBeforeEnter>
+          <Routes />
+        </AnimatePresence>
       </ChakraProvider>
     </BrowserRouter>
    

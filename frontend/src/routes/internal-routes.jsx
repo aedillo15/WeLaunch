@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react';
-import { Route, Routes, useMatch } from 'react-router';
+import React from 'react';
+import {useLocation,Routes, Route} from 'react-router-dom';
 
 import AuthorizeRoute from "../components/AuthorizeRoute"
 
-import { Login } from '../pages/Login';
 
 export default function InternalRoutes() {
 
