@@ -6,13 +6,20 @@ import theme from "./theme/theme"
 import { Text } from '@chakra-ui/react'
 
 import Routes from './routes/routes';
+import { BrowserRouter } from 'react-router-dom';
+
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Text>Hello WeLaunch</Text>
-      <Routes />
-    </ChakraProvider>
+    <BrowserRouter>
+       <ChakraProvider theme={theme}>
+        <AnimatePresence exitBeforeEnter>
+          <Routes />
+        </AnimatePresence>
+      </ChakraProvider>
+    </BrowserRouter>
+   
   );
 }
 

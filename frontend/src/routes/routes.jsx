@@ -1,15 +1,14 @@
 import React from "react"
-import { BrowserRouter } from "react-router-dom"
 import InternalRoutes from "./internal-routes"
 import OpenRoutes from "./open-routes"
 
 const Routes = () =>{
   return(
-    <BrowserRouter>
-      <InternalRoutes />
-      <OpenRoutes />
-  </BrowserRouter>
+      <>
+        <InternalRoutes />
+        <OpenRoutes />
+      </>
   )
 }
 
-export default Routes;
+export default Routes;  

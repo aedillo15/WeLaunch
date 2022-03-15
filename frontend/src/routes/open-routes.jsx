@@ -1,17 +1,16 @@
-import React, { Fragment } from 'react';
-import { Route, Routes, useMatch } from 'react-router';
+import React from 'react';
+import {useLocation,Routes, Route} from 'react-router-dom';
 
+import {Login} from '../pages/Login';
+import {Signup} from '../pages/Signup';
 
 export default function OpenRoutes(){
+   const location = useLocation();
 
-    // let { path } = useMatch();
-   
     return(
-        <Fragment>
-            <Routes>
-                {/* <Route path={`${path}login`} component={Login} />
-                <Route path={`${path}signup`} component={Register} /> */}
-            </Routes>
-        </Fragment>
+        <Routes location={location} key={location.pathname}>
+            <Route  path="/login" element={<Login />} />
+            <Route  path="/signup" element={<Signup />} />
+        </Routes>
     );
 }
