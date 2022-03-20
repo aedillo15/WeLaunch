@@ -26,3 +26,13 @@
 /Users/seth/Documents/Computer_Science/Term6/software_engineering/project/welaunch-backend/obj/Debug/net5.0/ref/welaunch-backend.dll
 /Users/seth/Documents/Computer_Science/Term6/software_engineering/project/welaunch-backend/obj/Debug/net5.0/welaunch-backend.pdb
 /Users/seth/Documents/Computer_Science/Term6/software_engineering/project/welaunch-backend/obj/Debug/net5.0/welaunch-backend.genruntimeconfig.cache
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/welaunch-backend.csproj.AssemblyReference.cache
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/welaunch-backend.GeneratedMSBuildEditorConfig.editorconfig
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/welaunch-backend.AssemblyInfoInputs.cache
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/welaunch-backend.AssemblyInfo.cs
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/welaunch-backend.csproj.CoreCompileInputs.cache
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/welaunch-backend.MvcApplicationPartsAssemblyInfo.cs
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/welaunch-backend.MvcApplicationPartsAssemblyInfo.cache
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/welaunch-backend.dll
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/ref/welaunch-backend.dll
+/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/Debug/net5.0/welaunch-backend.pdb

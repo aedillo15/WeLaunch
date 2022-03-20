@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XTST7Fa0jmmDD/MBouDj2MoWXxp0Qen2sqNZfVkoT9wGMxGy4wrMcQ8Ew0n0C3RvhnSLXUnIjOl3jgS5q5i+wQ==",
+  "dgSpecHash": "ax2/H83U3xhQHGvFRlKYeUSjPjGY+M6gomTPmk1FB4Pnxaiy+9BwnQvjijr1ZqofacaUrecAT+cKiGL6cjkzWA==",
   "success": true,
-  "projectFilePath": "/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/welaunch-backend/welaunch-backend.csproj",
+  "projectFilePath": "/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/welaunch-backend.csproj",
   "expectedPackageFiles": [
     "/Users/seth/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "/Users/seth/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",

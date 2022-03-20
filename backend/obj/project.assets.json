@@ -198,11 +198,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/welaunch-backend/welaunch-backend.csproj",
+      "projectUniqueName": "/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/welaunch-backend.csproj",
       "projectName": "welaunch-backend",
-      "projectPath": "/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/welaunch-backend/welaunch-backend.csproj",
+      "projectPath": "/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/welaunch-backend.csproj",
       "packagesPath": "/Users/seth/.nuget/packages/",
-      "outputPath": "/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/welaunch-backend/obj/",
+      "outputPath": "/Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/seth/.nuget/NuGet/NuGet.Config"
