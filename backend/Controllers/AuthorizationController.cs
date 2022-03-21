@@ -24,7 +24,8 @@ namespace welaunch_backend.Controllers
             IOpenIddictAuthorizationManager authorizationManager,
             IOpenIddictScopeManager scopeManager,
             SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager
+            )
         {
             _applicationManager = applicationManager;
             _authorizationManager = authorizationManager;
@@ -71,7 +72,7 @@ namespace welaunch_backend.Controllers
             var user = await _userManager.FindByNameAsync(request.Username);
             if (user == null)
                 return Unauthorized();
-
+        
             var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (!signInResult.Succeeded)
                 return Unauthorized();
@@ -80,7 +81,7 @@ namespace welaunch_backend.Controllers
                 TokenValidationParameters.DefaultAuthenticationType,
                 OpenIddictConstants.Claims.Name,
                 OpenIddictConstants.Claims.Role);
-
+        
             identity.AddClaim(OpenIddictConstants.Claims.Subject, user.Id,
                 OpenIddictConstants.Destinations.AccessToken);
             identity.AddClaim(OpenIddictConstants.Claims.Username, user.UserName,
@@ -102,7 +103,7 @@ namespace welaunch_backend.Controllers
                 OpenIddictConstants.Scopes.Email,
                 OpenIddictConstants.Scopes.Profile,
             });
-
+        
             return SignIn(claimsPrincipal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
     }

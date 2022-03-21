@@ -1,13 +1,19 @@
+using System;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using OpenIddict.Abstractions;
+
 using welaunch_backend.Models.IdentityModels;
 
 namespace welaunch_backend
 {
-    public  class Startup
+    public class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -16,76 +22,89 @@ namespace welaunch_backend
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddControllers();
-            
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                // Configure Entity Framework Core to use Microsoft SQL Server.
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-
-                // Register the entity sets needed by OpenIddict.
-                // Note: use the generic overload if you need to replace the default OpenIddict entities.
-                options.UseOpenIddict();
-            });
-
-            services.AddOpenIddict()
-
-                // Register the OpenIddict core components.
-                .AddCore(options =>
-                {
-                    // Configure OpenIddict to use the Entity Framework Core stores and models.
-                    // Note: call ReplaceDefaultEntities() to replace the default entities.
-                    options.UseEntityFrameworkCore()
-                           .UseDbContext<ApplicationDbContext>();
-                })
-
-                // Register the OpenIddict server components.
-                .AddServer(options =>
-                {
-                    // Enable the token endpoint.
-                    options.SetTokenEndpointUris("/connect/token");
-
-                    // Enable the client credentials flow.
-                    options.AllowClientCredentialsFlow();
-
-                    // Register the signing and encryption credentials.
-                    options.AddDevelopmentEncryptionCertificate()
-                           .AddDevelopmentSigningCertificate();
-
-                    // Register the ASP.NET Core host and configure the ASP.NET Core options.
-                    options.UseAspNetCore()
-                           .EnableTokenEndpointPassthrough();
-                })
-
-                // Register the OpenIddict validation components.
-                .AddValidation(options =>
-                {
-                    // Import the configuration from the local OpenIddict server instance.
-                    options.UseLocalServer();
-
-                    // Register the ASP.NET Core host.
-                    options.UseAspNetCore();
-                });
-
-            // Register the worker responsible of seeding the database with the sample clients.
-            // Note: in a real world application, this step should be part of a setup script.
-            // services.AddHostedService<Worker>();
-            
-            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "welaunch_backend", Version = "v1" });
             });
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("MBSConnStr"));
+                options.UseOpenIddict();
+            });
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.ClaimsIdentity.UserNameClaimType = OpenIddictConstants.Claims.Name;
+                options.ClaimsIdentity.UserIdClaimType = OpenIddictConstants.Claims.Subject;
+                options.ClaimsIdentity.RoleClaimType = OpenIddictConstants.Claims.Role;
+            });
+            
+            services.AddOpenIddict()
+                .AddCore(options => options.UseEntityFrameworkCore().UseDbContext<ApplicationDbContext>())
+                .AddServer(options =>
+                {
+                    options.SetTokenEndpointUris("/connect/token");
+                    options.SetUserinfoEndpointUris("/connect/userinfo");
+                    
+                    options.AllowPasswordFlow();
+                    //options.AllowClientCredentialsFlow();
+                    options.AllowRefreshTokenFlow();
+            
+            
+                    options.RegisterScopes(OpenIddictConstants.Permissions.Scopes.Email,
+                        OpenIddictConstants.Permissions.Scopes.Profile,
+                        OpenIddictConstants.Permissions.Scopes.Roles);
+            
+                    options.SetAccessTokenLifetime(TimeSpan.FromMinutes(30));
+                    options.SetRefreshTokenLifetime(TimeSpan.FromDays(7));
+            
+                    options.AddDevelopmentEncryptionCertificate()
+                        .AddDevelopmentSigningCertificate();
+            
+                    options.UseAspNetCore()
+                        .EnableTokenEndpointPassthrough();
+                })
+                .AddValidation(options =>
+                {
+                    options.UseLocalServer();
+                    options.UseAspNetCore();
+                });
+            
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = OpenIddictConstants.Schemes.Bearer;
+                options.DefaultChallengeScheme = OpenIddictConstants.Schemes.Bearer;
+            });
+
+
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddSignInManager()
+            //.AddUserStore<UserStore>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddUserManager<UserManager<ApplicationUser>>();
+
+            // Register the worker responsible of seeding the database with the sample clients.
+            // Note: in a real world application, this step should be part of a setup script.
+            // services.AddHostedService<Worker>();
+
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WeLaunch Backend v1"));
+            }
+
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -95,9 +114,31 @@ namespace welaunch_backend
             app.UseEndpoints(options =>
             {
                 options.MapControllers();
-                options.MapDefaultControllerRoute();
+                //options.MapDefaultControllerRoute();
             });
+
+            //Create OpenID Connect client application
+            using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            context.Database.EnsureCreated();
+            
+            var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
+            var existingClientApp = manager.FindByClientIdAsync("default-client").GetAwaiter().GetResult();
+            if (existingClientApp == null)
+            {
+                manager.CreateAsync(new OpenIddictApplicationDescriptor
+                {
+                    ClientId = "default-client",
+                    ClientSecret = "499D56FA-B47B-5199-BA61-B298D431C318",
+                    DisplayName = "Default client application",
+                    Permissions =
+                    {
+                        OpenIddictConstants.Permissions.Endpoints.Token,
+                        OpenIddictConstants.Permissions.GrantTypes.Password
+                    }
+                }).GetAwaiter().GetResult();
+            }
         }
-        
     }
 }
+

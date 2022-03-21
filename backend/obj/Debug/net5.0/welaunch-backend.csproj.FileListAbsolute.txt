@@ -110,3 +110,5 @@ C:\Users\sethc\OneDrive\Documents\computer_science\SoftwareEng\WeLaunch\backend\
 C:\Users\sethc\OneDrive\Documents\computer_science\SoftwareEng\WeLaunch\backend\obj\Debug\net5.0\ref\welaunch-backend.dll
 C:\Users\sethc\OneDrive\Documents\computer_science\SoftwareEng\WeLaunch\backend\obj\Debug\net5.0\welaunch-backend.pdb
 C:\Users\sethc\OneDrive\Documents\computer_science\SoftwareEng\WeLaunch\backend\obj\Debug\net5.0\welaunch-backend.genruntimeconfig.cache
+C:\Users\sethc\OneDrive\Documents\computer_science\SoftwareEng\WeLaunch\backend\bin\Debug\net5.0\Humanizer.dll
+C:\Users\sethc\OneDrive\Documents\computer_science\SoftwareEng\WeLaunch\backend\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
