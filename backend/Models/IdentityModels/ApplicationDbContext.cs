@@ -18,8 +18,7 @@ namespace welaunch_backend.Models.IdentityModels
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<IdentityRole> Roles { get; set; }
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
