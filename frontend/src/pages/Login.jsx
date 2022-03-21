@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import { Container, Input, Text, VStack, Box, Button, HStack, Link as UILink,InputGroup,InputRightElement } from '@chakra-ui/react'
-import AnimaledPage from "../components/AnimatedPsge"
+import AnimatedPage from "../components/AnimatedPsge"
 import { Link } from "react-router-dom"
 
 
@@ -10,7 +10,7 @@ export const Login = ()=>{
     const handleClick = () => setShow(!show)
 
     return(  
-        <AnimaledPage>
+        <AnimatedPage>
             <Box w='100%' h='100%' bgGradient='linear(to-br, #4D748C, #1B3059)' >
                 <Container maxW='container.sm' h="100%">
                     <VStack h="100%" justifyContent="center" alignItems="center">
@@ -34,7 +34,7 @@ export const Login = ()=>{
                     </VStack>
                 </Container>            
             </Box>
-        </AnimaledPage>
+        </AnimatedPage>
     
     )
 }

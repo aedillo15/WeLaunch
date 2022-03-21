@@ -16,6 +16,7 @@ function App() {
        <ChakraProvider theme={theme}>
         <AnimatePresence exitBeforeEnter>
           <Routes />
+          <Text>Test Text</Text>
         </AnimatePresence>
       </ChakraProvider>
     </BrowserRouter>
