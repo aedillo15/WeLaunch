@@ -24,3 +24,4 @@ namespace welaunch_backend
                 });
     }
 }
+    

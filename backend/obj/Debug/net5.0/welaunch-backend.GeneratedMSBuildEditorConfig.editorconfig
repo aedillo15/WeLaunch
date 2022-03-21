@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = welaunch_backend
-build_property.ProjectDir = /Users/seth/Documents/Computer_Science/Term6/software_engineering/project/WeLaunch/backend/
+build_property.ProjectDir = C:\Users\sethc\OneDrive\Documents\computer_science\SoftwareEng\WeLaunch\backend\
