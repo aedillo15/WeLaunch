@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import { Container, Input, Text, VStack, Box, Button, HStack, Link as UILink } from '@chakra-ui/react'
-import AnimatedPage from "../components/AnimatedPsge"
+import AnimatedPage from "../../components/AnimatedPsge"
 import { Link } from "react-router-dom"
 
 export const MainMenu = () => {

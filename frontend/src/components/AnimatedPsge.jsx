@@ -13,7 +13,7 @@ const AnimatedPage = ({children}) =>{
             variants={animations}
             initial="initial"
             animate="animate"
-            exit="exit" style={{height: '100%'}}>
+            exit="exit" >
 
             {children}
         </motion.div>
