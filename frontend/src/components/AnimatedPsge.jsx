@@ -7,17 +7,17 @@ const animations = {
     exit:{opacity: 0, x: -100, scaleY:0}
 }
 
-const AnimaledPage = ({children}) =>{
+const AnimatedPage = ({children}) =>{
     return(
         <motion.div 
             variants={animations}
             initial="initial"
             animate="animate"
-            exit="exit" style={{height: '100%'}}>
+            exit="exit" >
 
             {children}
         </motion.div>
     )
 }
 
-export default AnimaledPage;
+export default AnimatedPage;
