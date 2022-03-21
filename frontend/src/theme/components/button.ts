@@ -8,13 +8,19 @@ export const Button: ComponentStyleConfig = {
           }
     },
     // 3. We can add a new visual variant
-    // variants: {
-    // 'just-outline': {
-    //     boxShadow: '0 0 2px 2px #efdfde',
-    //     outline: 'none',
-    //     _hover:{
-    //         bg:"#99999977"
-    //     },
+    variants: {
+        'primary': {
+            bg:"brand.primary", 
+            color:"white",
+            outline: 'none',
+            _hover:{ bg: '#F2AF00' }
+        },
+        'secondary':{
+            bg:"brand.bl1", 
+            color:"white",  
+            _hover:{ bg: '#89a1c7' }
+        }
+    }
         
     // },
     // // 4. We can override existing variants

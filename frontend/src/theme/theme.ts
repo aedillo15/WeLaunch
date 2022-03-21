@@ -9,17 +9,23 @@ import {styles} from './styles'
 
 // Component style overrides
 import {Button} from './components/button'
+// import {Input} from './components/input'
 
-const colours ={
+const colors ={
     brand: {
-        100: "#f7fafc",
-        // ...
-        900: "#1a202c",
+        "primary": "#F28907",
+        "bl1":"#AAC1E6",
+        "bklight":"",
+        "bkDark": "",
+        "glass":"#FFFFFF10",
+        "lightText":"#FFFFFF33"
+
     },
 }
 
-const overrides = {
-    colours,
+const Theme = extendTheme({
+
+    colors,
     styles,
 //   borders,
   // Other foundational style overrides go here
@@ -27,6 +33,6 @@ const overrides = {
     Button,
     // Other components go here
   },
-}
+})
 
-export default extendTheme(overrides)
+export default Theme;
