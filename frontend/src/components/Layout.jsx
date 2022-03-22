@@ -1,16 +1,15 @@
 import React from "react"
 import Header from "./Header"
-import { Link } from "react-router-dom"
 import Footer from "./Footer"
 
-import { HStack, Link as UILink, Box } from "@chakra-ui/react"
+import { HStack, Box } from "@chakra-ui/react"
 
 const Layout = (props) =>{
     return(
         <Box w="100%" h="100%" bgGradient='linear(to-br, #4D748C, #1B3059)'>
             <Header>
                 <HStack>
-                {props.headerLinks}
+                    {props.headerLinks}
                 </HStack>
              </Header>
 
