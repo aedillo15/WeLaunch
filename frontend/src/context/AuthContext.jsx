@@ -9,12 +9,10 @@ export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [projectList, setProjectList] = useState([]);
+    //Change this to true to access protected pages
     const [authenticated, setAuthenticated] = useState(false)
     const [error, setError] = useState();
-
     const [bearerToken, setBearerToken] = useState(null)
-
 
 
     const login = (loginDto) => {

@@ -6,6 +6,8 @@ import {FaChevronDown} from "react-icons/fa"
 import axios from "axios"
 import { AuthContext } from "../../context/AuthContext"
 
+import { withRequireAuth } from "../../components/RequireAuth"
+
 
 const startups = [
     {
@@ -116,4 +118,4 @@ const ListItem = ({startup}) =>{
     )
 }
 
-export default StartUpList;
+export default withRequireAuth(StartUpList);
