@@ -1,16 +1,18 @@
-import React from 'react';
-import {useLocation,Routes, Route} from 'react-router-dom';
+////import React from 'react';
+////import {Route,Routes} from 'react-router-dom';
 
-import AuthorizeRoute from "../components/AuthorizeRoute"
+////import { RequireAuth } from "../components/RequireAuth"
+
+////import StartupList from "../pages/investor/StartupList"
 
 
-export default function InternalRoutes() {
+////export default function InternalRoutes() {
 
-    // let { path } = useMatch();
 
-    return (
-        <Routes>
-                {/* <AuthorizeRoute exact path={`${path}`} component={Home} redirectPath="/login" /> */}
-        </Routes>
-    )
-}
+////    return (
+////        <Routes>
+////            <Route exact path={'/investor2'} element={ <RequireAuth />}  />
+         
+////        </Routes>
+////    )
+////}

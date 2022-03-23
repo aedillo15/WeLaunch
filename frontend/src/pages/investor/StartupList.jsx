@@ -1,8 +1,11 @@
-import React from "react"
+import React, { useContext, useEffect } from "react"
 import { Box, Button, Container, HStack, Text, Image, Flex, Spacer, Menu, MenuButton, MenuList, MenuOptionGroup,MenuItemOption } from "@chakra-ui/react"
 import Layout from "../../components/Layout"
 import SearchBar from "../../components/SearchBar"
 import {FaChevronDown} from "react-icons/fa"
+import axios from "axios"
+import { AuthContext } from "../../context/AuthContext"
+
 
 const startups = [
     {
@@ -24,7 +27,26 @@ const startups = [
 ]
 
 
-const StartUpList = () =>{
+const StartUpList = () => {
+
+    const { getBearerToken } = useContext(AuthContext)  
+
+    const callAPI = () => {
+        const token = getBearerToken()
+        console.log('Token ' + token)
+        let config = {
+            method: 'get',
+            url: "https://localhost:44390/api/TestAuth",
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }
+
+        axios(config)
+            .then(resp => {
+                console.log(JSON.stringify(resp))
+            })
+    }
 
     return(
         <Layout>
@@ -58,6 +80,8 @@ const StartUpList = () =>{
                             </MenuOptionGroup>
                             </MenuList>
                         </Menu>
+
+                        <Button onClick={() =>callAPI()}>callAPI</Button>
                     </HStack>
                 </SearchBar>
                 <Box  h="100%" pt={5}> 
@@ -70,7 +94,6 @@ const StartUpList = () =>{
 
             </Container> 
         </Layout>
-       
     )
 }
 

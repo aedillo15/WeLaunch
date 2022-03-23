@@ -22,7 +22,7 @@ export const Login = ()=>{
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
 
-    const {login} = useContext(AuthContext)
+    const { login } = useContext(AuthContext)
 
     const submit = () =>{
 
@@ -57,7 +57,13 @@ export const Login = ()=>{
         }
 
         if(!fail){
-            let loginData = {'email': email, 'password': password}
+            let loginData = {
+                'username': email,
+                'password': password,
+                'grant_type': 'password',
+                'client_id': 'default-client',
+                'client_secret':'499D56FA-B47B-5199-BA61-B298D431C318'
+            }
             login(loginData) 
             console.log("loginData " + JSON.stringify(loginData))
         }   

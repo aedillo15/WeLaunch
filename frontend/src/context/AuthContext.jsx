@@ -1,9 +1,11 @@
 import React, {createContext, useState} from "react"
 import axios from 'axios';
+import qs from 'qs';
 import {ApiUrls} from "../constants/ApiConstants"
-import { useNavigate  } from 'react-router-dom';
+/*import { useNavigate  } from 'react-router-dom';*/
+import { Login } from "../pages/common/Login";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -14,45 +16,57 @@ const AuthProvider = ({ children }) => {
     const [bearerToken, setBearerToken] = useState(null)
 
 
-    const navigate = useNavigate();
 
     const login = (loginDto) => {
-        
-        axios.post(ApiUrls.login, loginDto)
-            .then(response => {
-                if (response !== null) {
-                    setAuthenticated(true)
-                    //bearerToken(response.data.bearerToken)
-                }
-            })
-            .catch(error => {
-                setError(error.response);
-                setAuthenticated(false)
-                setBearerToken(null)
-            });
+        var data = qs.stringify(loginDto);
+        var config = {
+            method: 'post',
+            url: 'https://localhost:44390/connect/token',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: data
+        };
+        axios(config)
+        .then(response => {
+            if (response !== null) {
+                setAuthenticated(true)
+                setBearerToken(response.data.access_token)
+                console.log(JSON.stringify(bearerToken))
+            }
+        })
+        .catch(error => {
+            setError(error.response);
+            setAuthenticated(false)
+            setBearerToken(null)
+            console.log( JSON.stringify(error))
+        });
     }
 
     const register = (userDto) => {
         axios.post(ApiUrls.register, userDto)
             .then(() =>{
-                navigate("/login")
+             /*   navigate("/login")*/
             })
             .catch(error => {
                 setError(error.response.data);
             });
     }
 
+    const getBearerToken = () => {
+        console.log(bearerToken)
+        return bearerToken  
+    }
+
+    let value = {
+        login,
+        register,
+        getBearerToken,
+        authenticated
+    }
+
     return (
-        <AuthContext.Provider
-            value={{
-                login,
-                register,
-                // logout,     
-                // authenticated,
-                // user,
-                // error,
-                // setError
-            }}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );
