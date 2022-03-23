@@ -2,8 +2,7 @@ import React, {createContext, useState} from "react"
 import axios from 'axios';
 import qs from 'qs';
 import {ApiUrls} from "../constants/ApiConstants"
-/*import { useNavigate  } from 'react-router-dom';*/
-import { Login } from "../pages/common/Login";
+import { useNavigate  } from 'react-router-dom';
 
 export const AuthContext = createContext(null);
 
@@ -13,6 +12,8 @@ const AuthProvider = ({ children }) => {
     const [authenticated, setAuthenticated] = useState(false)
     const [error, setError] = useState();
     const [bearerToken, setBearerToken] = useState(null)
+
+    const navigate = useNavigate()
 
 
     const login = (loginDto) => {
@@ -44,7 +45,7 @@ const AuthProvider = ({ children }) => {
     const register = (userDto) => {
         axios.post(ApiUrls.register, userDto)
             .then(() =>{
-             /*   navigate("/login")*/
+                navigate("/login")
             })
             .catch(error => {
                 setError(error.response.data);
