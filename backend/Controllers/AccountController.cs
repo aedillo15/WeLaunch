@@ -26,7 +26,7 @@ namespace welaunch_backend.Controllers
         
         [AllowAnonymous]
         //[ValidateAntiForgeryToken]
-        [HttpPost("~/api/auth/register")]
+        [HttpPost("~/api/account/register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
             if (ModelState.IsValid)

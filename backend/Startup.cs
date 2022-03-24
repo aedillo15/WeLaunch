@@ -107,6 +107,13 @@ namespace welaunch_backend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            
+            app.UseCors(options =>options
+                .WithOrigins(new []{"http://localhost:8080", "http://localhost:5001"})
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+            );
 
             app.UseAuthentication();
             app.UseAuthorization();

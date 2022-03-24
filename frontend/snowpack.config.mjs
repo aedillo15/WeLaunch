@@ -12,9 +12,11 @@ export default {
   optimize: {
     /* Example: Bundle your final build: */
     // "bundle": true,
+    
   },
   packageOptions: {
     /* ... */
+    knownEntrypoints:['@chakra-ui/hooks/use-animation-state', '@chakra-ui/hooks']
   },
   devOptions: {
     /* ... */
