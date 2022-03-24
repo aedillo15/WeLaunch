@@ -9,7 +9,7 @@ import Menu from "../common/CommonMenu"
 
 
 
-export const MainMenu = (props) => {
+const MainMenu = (props) => {
 
     const [show, setShow] = useState(false)
 
@@ -35,10 +35,7 @@ export const MainMenu = (props) => {
                             </VStack>   
                             <Box w="80%" pl="20">
                                 <VStack>
-                                    <Text fontSize={35} color="#F28907" align="center">Cash Flow</Text>
 
-                                        
-                                    <Button bg="#AAC1E6" color="white"  _hover={{ bg: '#89a1c7' }} w="100%" >Here</Button>
                                     {props.children}
                                 </VStack>
                             </Box>
@@ -52,3 +49,5 @@ export const MainMenu = (props) => {
         </Layout>
     )
 }
+
+export default MainMenu

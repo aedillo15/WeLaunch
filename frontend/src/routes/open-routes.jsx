@@ -3,7 +3,8 @@ import {useLocation,Routes, Route} from 'react-router-dom';
 
 import {Login} from '../pages/common/Login';
 import {Signup} from '../pages/common/Signup';
-import {MainMenu} from '../pages/entrepreneur/MainMenu';
+import MainMenu from '../pages/entrepreneur/MainMenu';
+import CashFlow from '../pages/entrepreneur/CashFlow';
 import FrontPage from '../pages/common/FrontPage';
 import StartUpList from '../pages/investor/StartupList';
 
@@ -15,7 +16,8 @@ export default function OpenRoutes(){
             <Route  path="/" element={<FrontPage />}/>
             <Route  path="/login" element={<Login />} />
             <Route  path="/signup" element={<Signup />} />
-            <Route  path="/mainmenu" element={<MainMenu />} />
+            <Route  path="/entrepreneur" element={<MainMenu />} />
+            <Route  path="/entrepreneur/cashflow" element={<CashFlow />} />
             <Route  path="/investor" element={<StartUpList />} />
         </Routes>
     );
