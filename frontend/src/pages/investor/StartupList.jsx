@@ -95,7 +95,7 @@ const StartUpList = () => {
                 </Box>
 
             </Container> 
-        </Layout>
+        </Layout>   
     )
 }
 
@@ -118,4 +118,5 @@ const ListItem = ({startup}) =>{
     )
 }
 
-export default withRequireAuth(StartUpList);
+// export default withRequireAuth(StartUpList);
+export default StartUpList;

@@ -15,6 +15,9 @@ const Menu =()=>{
             <UILink as={Link} to='/investor' >
                 Investor
             </UILink>
+            <UILink as={Link} to='/entrepreneur' >
+                Entrepreneur
+            </UILink>
         </HStack>
 
     )
