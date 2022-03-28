@@ -17,8 +17,8 @@ const Incorporate = () => {
 
 
         <MainMenu>
-            <Text fontSize={45} color="#e2f7d2" justifyContent="top">Incorporation (in Canada) </Text>
-            <Text fontSize={15} color="#e2f7d2" justifyContent="top">The first step of launching a business is to officially incorporate with the federal government.</Text>
+            <Text fontSize={45} color="#e2f7d2">Incorporation (in Canada) </Text>
+            <Text fontSize={15} color="#e2f7d2">The first step of launching a business is to officially incorporate with the federal government.</Text>
 
         </MainMenu>
 
