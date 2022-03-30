@@ -1,10 +1,40 @@
-import React, { useContext, useEffect } from "react"
-import { Box, Button, Container, HStack, Text, Image, Flex, Spacer, Menu, MenuButton, MenuList, MenuOptionGroup,MenuItemOption } from "@chakra-ui/react"
+import React, { useContext } from "react"
+import { Box, 
+    Button, 
+    Container, 
+    HStack, 
+    Text, 
+    Image, 
+    Flex, 
+    Spacer, 
+    Menu, 
+    MenuButton, 
+    MenuList, 
+    MenuOptionGroup,
+    MenuItemOption, 
+    useDisclosure, 
+    Modal, 
+    ModalOverlay, 
+    ModalContent, 
+    ModalHeader, 
+    ModalCloseButton, 
+    ModalBody,
+    Drawer,
+    DrawerOverlay,
+    DrawerContent,
+    DrawerCloseButton,
+    DrawerHeader,
+    DrawerBody,
+    Input,
+    DrawerFooter
+} from "@chakra-ui/react"
 import Layout from "../../components/Layout"
 import SearchBar from "../../components/SearchBar"
 import {FaChevronDown} from "react-icons/fa"
 import axios from "axios"
 import { AuthContext } from "../../context/AuthContext"
+import MsgPopup from "./MsgPopup"
+import StartupDetail from "./StartupDetail"
 
 import { withRequireAuth } from "../../components/RequireAuth"
 
@@ -31,6 +61,7 @@ const startups = [
 
 const StartUpList = () => {
 
+
     const { getBearerToken } = useContext(AuthContext)  
 
     const callAPI = () => {
@@ -48,6 +79,10 @@ const StartUpList = () => {
             .then(resp => {
                 console.log(JSON.stringify(resp))
             })
+    }
+
+    const openDrawer = () =>{
+        onClick(onOpen)
     }
 
     return(
@@ -93,7 +128,6 @@ const StartUpList = () => {
                         })
                     }
                 </Box>
-
             </Container> 
         </Layout>   
     )
@@ -102,18 +136,57 @@ const StartUpList = () => {
 
 const ListItem = ({startup}) =>{
 
+    const { isOpen: isOpenModal, onOpen : onOpenModal, onClose : onCloseModal } = useDisclosure()
+    const { isOpen : isDrawerOpen, onOpen : onOpenDrawer, onClose: onCloseDrawer } = useDisclosure()
+    const btnRef = React.useRef()
+
     const{
         name,
         empNo
     }  = startup
 
+    const openModal = (event) =>{
+        
+        onOpenModal()
+        event.stopPropagation() 
+    }
+
     return(
-        <Flex h="60px" p="5" bg="#FFFFFF22" alignItems="center" marginBottom={2}>
+        <Flex h="60px" p="5" bg="#FFFFFF22" alignItems="center" marginBottom={2} _hover={{shadow:"2xl", mt:"4", mb:"4", bg:"#FFFFFF55", color:"white", cursor:"pointer"} } btnRef={btnRef} onClick={onOpenDrawer} >
             <Image  />
             <Text color="white" pr="5">{name}</Text>
             <Text color="white" pr="5">No. Employees {empNo}</Text>
             <Spacer />
-            <Button variant="primary">Message</Button>
+            <Button variant="primary" onClick={openModal}>Message</Button>
+
+            <Modal isOpen={isOpenModal}  onClose={onCloseModal} size="4xl" isCentered  >
+                <ModalOverlay />
+                <ModalContent bg="white">
+                    <ModalHeader>{name}</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody minH="50vh" p={0}>
+                        <MsgPopup />
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
+
+         <Drawer
+            isOpen={isDrawerOpen}
+            placement='right'
+            onClose={onCloseDrawer}
+            finalFocusRef={btnRef}
+            size="lg"
+            >
+                {/* <DrawerOverlay /> */}
+                <DrawerContent >
+                    <DrawerHeader>{name}</DrawerHeader>
+
+                    <DrawerBody width="100em">
+                       <StartupDetail startup={startup} />
+                    </DrawerBody>
+
+                </DrawerContent>
+            </Drawer>
         </Flex>
     )
 }

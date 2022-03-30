@@ -12,8 +12,6 @@ import Incorporate from '../pages/entrepreneur/Incorporate';
 
 import FrontPage from '../pages/common/FrontPage';
 import StartUpList from '../pages/investor/StartupList';
-import CashFlow from '../pages/entrepreneur/CashFlow';
-
 
 
 export default function OpenRoutes(){
@@ -31,9 +29,8 @@ export default function OpenRoutes(){
             <Route  path="/Incorporate" element={<Incorporate />} />
             <Route  path="/cashflow" element={<CashFlow />} />
             <Route  path="/Product" element={<Product />} />
-
             <Route  path="/entrepreneur" element={<MainMenu />} />
-            <Route  path="/entrepreneur/cashflow" element={<CashFlow />} />
+        
 
             {/*---------- Protected Routes *---------- */}
             <Route path="/investor" element={<StartUpList />} />
