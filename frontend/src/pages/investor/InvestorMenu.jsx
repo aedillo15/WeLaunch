@@ -10,7 +10,7 @@ const InvestorMenu = () =>{
             Home
         </UILink>
         <UILink as={Link} to='/messages' >
-            messages
+            Messages
         </UILink>
     </HStack>
     )

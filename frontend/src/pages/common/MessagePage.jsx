@@ -4,6 +4,7 @@ import AnimatedPage from "../../components/AnimatedPsge";
 
 const contacts = ["One", "Tweo", "Three", "Four" ]
 import Layout from "../../components/Layout";
+import InvestorMenu from "../investor/InvestorMenu";
 import Menu from "./CommonMenu";
 
 const msgs = [ {content : "Hello" , date : "10/7/12"}, {content : "Yoo" , date : "10/7/12"}, {content : "Hi" , date : "10/7/12"}]
@@ -11,7 +12,7 @@ const msgs = [ {content : "Hello" , date : "10/7/12"}, {content : "Yoo" , date :
 
 const MessagesPage = ()=>{
     return(
-        <Layout headerLinks={<Menu />} >
+        <Layout headerLinks={<InvestorMenu />} >
             <AnimatedPage>
                 <Container maxW='container.lg' h="90vh" bg="brand.glass" shadow="xl" p="0" borderRadius="2em">
             
