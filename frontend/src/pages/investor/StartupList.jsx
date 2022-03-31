@@ -20,13 +20,9 @@ import { Box,
     ModalCloseButton, 
     ModalBody,
     Drawer,
-    DrawerOverlay,
     DrawerContent,
-    DrawerCloseButton,
     DrawerHeader,
     DrawerBody,
-    Input,
-    DrawerFooter
 } from "@chakra-ui/react"
 import Layout from "../../components/Layout"
 import SearchBar from "../../components/SearchBar"

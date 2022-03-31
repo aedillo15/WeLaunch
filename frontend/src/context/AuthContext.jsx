@@ -16,7 +16,7 @@ const AuthProvider = ({ children }) => {
     const navigate = useNavigate()
 
 
-    const login = (loginDto) => {
+    const login = async (loginDto) => {
         var data = qs.stringify(loginDto);
         var config = {
             method: 'post',
@@ -32,6 +32,8 @@ const AuthProvider = ({ children }) => {
                 setAuthenticated(true)
                 setBearerToken(response.data.access_token)
                 console.log(JSON.stringify(bearerToken))
+                
+                return await getUser()
             }
         })
         .catch(error => {
@@ -42,7 +44,26 @@ const AuthProvider = ({ children }) => {
         });
     }
 
-    const register = (userDto) => {
+    const  getUser = async () =>{
+        let config = {
+            method: 'get',
+            url: "https://localhost:44390/api/user",
+            headers: {
+                'Authorization': 'Bearer ' + bearerToken
+            }
+        }
+        axios(config)
+        .then(resp => {
+            if (resp?.data !== null) {
+                    setUser(resp.data)
+                    console.log(JSON.stringify(resp))
+                    return resp.data
+            }
+        
+        })
+    }
+
+    const register = async (userDto) => {
         axios.post(ApiUrls.register, userDto)
             .then(() =>{
                 navigate("/login")
@@ -61,7 +82,8 @@ const AuthProvider = ({ children }) => {
         login,
         register,
         getBearerToken,
-        authenticated
+        authenticated,
+        user
     }
 
     return (

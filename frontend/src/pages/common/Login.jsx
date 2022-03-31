@@ -64,8 +64,20 @@ export const Login = ()=>{
                 'client_id': 'default-client',
                 'client_secret':'499D56FA-B47B-5199-BA61-B298D431C318'
             }
-            login(loginData) 
+            await login(loginData).then( user =>{
+                if(user !== null) {
+                   if(user.role === "investor")          { Navigate("/startuplist") }
+                   else if(user.role === "entrepreneur") { Navigate("/entrepreneur") }
+                   else if(user.role === "accelerator")  { Navigate("/accelerator") }
+                   else                                  { Navigate("/login") }
+                } 
+            }
+                
+            ) 
             console.log("loginData " + JSON.stringify(loginData))
+
+
+
         }   
     }
 
