@@ -37,6 +37,7 @@ import MsgPopup from "./MsgPopup"
 import StartupDetail from "./StartupDetail"
 
 import { withRequireAuth } from "../../components/RequireAuth"
+import InvestorMenu from "./InvestorMenu"
 
 
 const startups = [
@@ -86,7 +87,7 @@ const StartUpList = () => {
     }
 
     return(
-        <Layout>
+        <Layout headerLinks={<InvestorMenu />}>
             <Container maxW='container.lg' h="90vh" pt={10} >
                 <SearchBar>
                     <HStack>
