@@ -12,8 +12,7 @@ import Incorporate from '../pages/entrepreneur/Incorporate';
 
 import FrontPage from '../pages/common/FrontPage';
 import StartUpList from '../pages/investor/StartupList';
-
-
+import MessagesPage from '../pages/common/MessagePage';
 
 
 export default function OpenRoutes(){
@@ -31,8 +30,10 @@ export default function OpenRoutes(){
             <Route  path="/Incorporate" element={<Incorporate />} />
             <Route  path="/cashflow" element={<CashFlow />} />
             <Route  path="/Product" element={<Product />} />
-
             <Route  path="/entrepreneur" element={<MainMenu />} />
+
+            <Route  path="/messages" element={<MessagesPage />} />
+        
 
             {/*---------- Protected Routes *---------- */}
             <Route path="/investor" element={<StartUpList />} />

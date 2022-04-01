@@ -10,6 +10,7 @@ import {styles} from './styles'
 // Component style overrides
 import {Button} from './components/button'
 // import {Input} from './components/input'
+import { Link } from './components/links'
 
 const colors ={
     brand: {
@@ -31,6 +32,7 @@ const Theme = extendTheme({
   // Other foundational style overrides go here
   components: {
     Button,
+    Link
     // Other components go here
   },
 })
