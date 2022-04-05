@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Box, Button, Container, HStack, Text, Image, Flex, Spacer, Menu, MenuButton, MenuList, MenuOptionGroup,MenuItemOption } from "@chakra-ui/react"
+import {RadioGroup, Radio, FormHelperText, FormControl, FormLabel, Input, Box, Button, Container, HStack, VStack, Text, Image, Flex, Spacer, Menu, MenuButton, MenuList, MenuOptionGroup,MenuItemOption } from "@chakra-ui/react"
 import AnimatedPage from "../../components/AnimatedPsge"
 import { Link } from "react-router-dom"
 import Layout from "../../components/Layout";
@@ -33,6 +33,10 @@ const entries = [
 
 const CashFlow = () => {
 
+    function AddEntry(values){
+        //entries.push(values)
+    }
+
 
     const [show, setShow] = useState(false)
 
@@ -51,7 +55,34 @@ const CashFlow = () => {
                            return  <ListItem entry={entry} mb={5} />
                         })
                     }
+                <Spacer/>
+                <form onSubmit={AddEntry}>
+                <FormControl as='fieldset' align="center">
+                    <HStack>
+                        <Input id='description' placeholder='Description' />
+                        <Spacer/>
+                        <VStack>
+                        
+                        <RadioGroup defaultValue='Itachi'>
+                            <VStack spacing='24px' color="white">
+                                <Radio value='Income'>Income</Radio>
+                                <Radio value='Expense'>Expense</Radio>
+                            </VStack>
+                        </RadioGroup>
+                        </VStack>
+                        <Spacer/>
+                        <Input id='value' placeholder='Amount' />
+                    </HStack>
+
+                </FormControl>
+                <Button mt={4} colorScheme='teal' onClick={AddEntry(this)}>
+                Submit
+                </Button>
+                </form>
                 </Box>
+
+
+ 
             
         </MainMenu>
 
