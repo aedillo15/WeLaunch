@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -20,7 +21,7 @@ namespace welaunch_backend
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -48,8 +49,9 @@ namespace welaunch_backend
                 .AddCore(options => options.UseEntityFrameworkCore().UseDbContext<ApplicationDbContext>())
                 .AddServer(options =>
                 {
-                    options.SetTokenEndpointUris("/connect/token");
-                    options.SetUserinfoEndpointUris("/connect/userinfo");
+                    options.SetAuthorizationEndpointUris("/connect/authorize")
+                    .SetTokenEndpointUris("/connect/token")
+                    .SetUserinfoEndpointUris("/connect/userinfo");
                     
                     options.AllowPasswordFlow();
                     //options.AllowClientCredentialsFlow();
@@ -114,7 +116,7 @@ namespace welaunch_backend
                 .AllowAnyMethod()
                 .AllowCredentials()
             );
-
+            
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -128,6 +130,21 @@ namespace welaunch_backend
             using var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             context.Database.EnsureCreated();
+            
+            //initializing custom roles 
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            string[] roleNames = { "Admin", "Investor", "Entrepreneur", "Accelerator" };
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult();
+                // ensure that the role does not exist
+                if (!roleExist)
+                {
+                    //create the roles and seed them to the database: 
+                    roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+                }
+            }
             
             var manager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
             var existingClientApp = manager.FindByClientIdAsync("default-client").GetAwaiter().GetResult();

@@ -1,6 +1,6 @@
-import React, {useContext, useState} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import AnimatedPage from "../../components/AnimatedPsge"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Layout from "../../components/Layout"
 import Menu from "./CommonMenu"
 import CustomInput from "../../components/CustomInput"
@@ -22,7 +22,9 @@ export const Login = ()=>{
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
 
-    const { login } = useContext(AuthContext)
+    const { login, user } = useContext(AuthContext)
+
+    const navigate = useNavigate()
 
     const submit = () =>{
 
@@ -64,22 +66,20 @@ export const Login = ()=>{
                 'client_id': 'default-client',
                 'client_secret':'499D56FA-B47B-5199-BA61-B298D431C318'
             }
-            await login(loginData).then( user =>{
-                if(user !== null) {
-                   if(user.role === "investor")          { Navigate("/startuplist") }
-                   else if(user.role === "entrepreneur") { Navigate("/entrepreneur") }
-                   else if(user.role === "accelerator")  { Navigate("/accelerator") }
-                   else                                  { Navigate("/login") }
-                } 
-            }
-                
-            ) 
-            console.log("loginData " + JSON.stringify(loginData))
-
-
-
+             login(loginData)
         }   
     }
+
+    useEffect(() => {
+        if (user !== undefined && user.userRoles !== undefined) {
+        
+            if (user.userRoles[0] === "Admin")           { navigate("/investor") }
+            else if (user.userRoles === "Entrepreneur")  { navigate("/entrepreneur") }
+            else if (user.userRoles === "Accelerator")   { navigate("/accelerator") }
+            else                                         { navigate("/login") }
+    
+        }
+    }, [user]);
 
     return(  
         <Layout headerLinks={<Menu />} >
