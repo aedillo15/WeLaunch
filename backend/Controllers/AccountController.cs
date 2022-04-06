@@ -8,13 +8,10 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using welaunch_backend.DTOs;
-using welaunch_backend.Models.IdentityModels;
-using OpenIddict.Abstractions;
-using OpenIddict.Server.AspNetCore;
+using welaunch_backend.Models;
 using OpenIddict.Validation.AspNetCore;
 
 namespace welaunch_backend.Controllers

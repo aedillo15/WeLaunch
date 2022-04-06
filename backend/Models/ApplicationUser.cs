@@ -7,7 +7,7 @@
 using Microsoft.AspNetCore.Identity;
 
 
-namespace welaunch_backend.Models.IdentityModels
+namespace welaunch_backend.Models
 {
     public class ApplicationUser : IdentityUser { }
 }
