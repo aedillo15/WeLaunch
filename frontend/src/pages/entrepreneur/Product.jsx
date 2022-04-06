@@ -18,7 +18,7 @@ const Product = () => {
 
         <MainMenu>
             <Text fontSize={45} color="#e2f7d2">Product Page.  What are you selling?</Text>
-            <Text fontSize={15} color="#e2f7d2">Businesses make money buy selling products and services.  What will your business sell?  What does it cost to create and distribute your product?.</Text>
+            <Text fontSize={15} color="#e2f7d2">Businesses make money buy selling products and services.  What will your business sell?  What does it cost to create and distribute your product?</Text>
 
         </MainMenu>
 
