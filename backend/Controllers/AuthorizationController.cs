@@ -1,3 +1,4 @@
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
@@ -7,7 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using OpenIddict.Abstractions;
 using OpenIddict.Server.AspNetCore;
 using welaunch_backend.Models.IdentityModels;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
 
 namespace welaunch_backend.Controllers
 {
@@ -106,5 +108,27 @@ namespace welaunch_backend.Controllers
 
             return SignIn(claimsPrincipal, OpenIddictServerAspNetCoreDefaults.AuthenticationScheme);
         }
+
+
+        [HttpGet("~/connect/authorize")]
+        [HttpPost("~/connect/authorize")]
+        [IgnoreAntiforgeryToken]
+        public async Task<IActionResult> Authorize()
+        {
+
+            var request = HttpContext.GetOpenIddictServerRequest() ?? throw new InvalidOperationException("The OpenID Connect request cannot be retrieved.");
+
+            var result = await HttpContext.AuthenticateAsync(IdentityConstants.ApplicationScheme);
+
+            // Retrieve the profile of the logged in user.
+            var user = await _userManager.GetUserAsync(result.Principal) ??
+                throw new InvalidOperationException("The user details cannot be retrieved.");
+
+            Console.WriteLine(user);
+
+            return Ok(user);
+
+        }
+
     }
 }
