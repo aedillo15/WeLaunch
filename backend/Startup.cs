@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -10,7 +9,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using OpenIddict.Abstractions;
 
-using welaunch_backend.Models.IdentityModels;
+using welaunch_backend.Models;
+using welaunch_backend.Models.EFRepositories;
+using welaunch_backend.Models.IRepositories;
 
 namespace welaunch_backend
 {
@@ -90,6 +91,8 @@ namespace welaunch_backend
             //.AddUserStore<UserStore>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddUserManager<UserManager<ApplicationUser>>();
+
+            services.AddScoped<IMessageRepository, MessageRepository>();
 
             // Register the worker responsible of seeding the database with the sample clients.
             // Note: in a real world application, this step should be part of a setup script.

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using welaunch_backend.Models.IdentityModels;
+using welaunch_backend.Models;
 
 namespace welaunch_backend.Migrations
 {
@@ -351,7 +351,7 @@ namespace welaunch_backend.Migrations
                     b.ToTable("OpenIddictTokens");
                 });
 
-            modelBuilder.Entity("welaunch_backend.Models.IdentityModels.ApplicationUser", b =>
+            modelBuilder.Entity("welaunch_backend.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -362,6 +362,9 @@ namespace welaunch_backend.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ConversationID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -405,6 +408,8 @@ namespace welaunch_backend.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ConversationID");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -414,6 +419,42 @@ namespace welaunch_backend.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("welaunch_backend.Models.Conversation", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Conversations");
+                });
+
+            modelBuilder.Entity("welaunch_backend.Models.Message", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ConversationID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("convoID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ConversationID");
+
+                    b.ToTable("Message");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -427,7 +468,7 @@ namespace welaunch_backend.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("welaunch_backend.Models.IdentityModels.ApplicationUser", null)
+                    b.HasOne("welaunch_backend.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -436,7 +477,7 @@ namespace welaunch_backend.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("welaunch_backend.Models.IdentityModels.ApplicationUser", null)
+                    b.HasOne("welaunch_backend.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -451,7 +492,7 @@ namespace welaunch_backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("welaunch_backend.Models.IdentityModels.ApplicationUser", null)
+                    b.HasOne("welaunch_backend.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -460,7 +501,7 @@ namespace welaunch_backend.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("welaunch_backend.Models.IdentityModels.ApplicationUser", null)
+                    b.HasOne("welaunch_backend.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -491,6 +532,20 @@ namespace welaunch_backend.Migrations
                     b.Navigation("Authorization");
                 });
 
+            modelBuilder.Entity("welaunch_backend.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("welaunch_backend.Models.Conversation", null)
+                        .WithMany("Users")
+                        .HasForeignKey("ConversationID");
+                });
+
+            modelBuilder.Entity("welaunch_backend.Models.Message", b =>
+                {
+                    b.HasOne("welaunch_backend.Models.Conversation", null)
+                        .WithMany("Messages")
+                        .HasForeignKey("ConversationID");
+                });
+
             modelBuilder.Entity("OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreApplication", b =>
                 {
                     b.Navigation("Authorizations");
@@ -501,6 +556,13 @@ namespace welaunch_backend.Migrations
             modelBuilder.Entity("OpenIddict.EntityFrameworkCore.Models.OpenIddictEntityFrameworkCoreAuthorization", b =>
                 {
                     b.Navigation("Tokens");
+                });
+
+            modelBuilder.Entity("welaunch_backend.Models.Conversation", b =>
+                {
+                    b.Navigation("Messages");
+
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
