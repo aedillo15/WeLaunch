@@ -8,8 +8,16 @@ namespace welaunch_backend.Models
 {
     public class Conversation
     {
-        public Guid ID { get; set; }
-        public List<ApplicationUser> Users { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+        public  ICollection<ApplicationUser> Users { get; set; }
         public List<Message> Messages { get; set; }
+        
+        public Conversation()
+        {
+            Id =  Guid.NewGuid();
+            Messages = new List<Message>();
+            Users = new List<ApplicationUser>();
+        }
     }
 }

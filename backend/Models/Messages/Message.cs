@@ -10,21 +10,18 @@ namespace welaunch_backend.Models
     {
         [Key]
         public Guid ID { get; set; }
-        public DateTime date { get; set; }
-        public String content { get; set; }
+        // public DateTime date { get; set; }
+        public string Content { get; set; }
 
-        public Guid convoID { get; set; }
+        public Guid ConversationId { get; set; }
 
-        public Message()
+        public Message( string content, Guid conversationId)
         {
+            ID =  Guid.NewGuid();
+            // this.date = date;
+            Content = content;
+            ConversationId = conversationId;
 
-        }
-   
-        public Message(DateTime date, string content, Guid convoID)
-        {
-            this.date = date;
-            this.content = content;
-            this.convoID = convoID;
         }
 
     }

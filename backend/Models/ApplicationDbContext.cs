@@ -19,6 +19,8 @@ namespace welaunch_backend.Models
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Conversation> Conversations { get; set; }
+        public DbSet<Message> Messages { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

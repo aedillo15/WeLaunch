@@ -17,25 +17,41 @@ namespace welaunch_backend.Models.EFRepositories
             _context = context;
         }
 
-        public IEnumerable<Conversation> Conversations => _context.Conversations.Include(convo => convo.Users);
+        public IEnumerable<Conversation> Conversations => _context.Conversations
+            .Include(c => c.Users)
+            .Include(c => c.Messages);
 
-        public IEnumerable<Conversation> GetConversations(string userID)
+        public IEnumerable<Conversation> GetConversations(string userId)
         {
-            return Conversations.Where(convo => 
-                convo.Users.Any(user => user.Id == userID)
+            return Conversations.Where(c => 
+                c.Users.Any(user => user.Id == userId)
             );
+            return null;
         }
 
-        public IEnumerable<Message> AddToConversation(MessageDTO message)
+        public IEnumerable<Message> AddToConversation(MessageDTO message, ApplicationUser user, ApplicationUser toUser)
         {
-            Guid convoID = Guid.Parse(message.convoID);
+            var conversation = Conversations.SingleOrDefault(c => c.Users.Contains(toUser) && c.Users.Contains(user));
+            
+            if (conversation == null)
+            {
+                var c = new Conversation();
+                c.Messages.Add(new Message(message.Content, c.Id));
+                c.Users.Add(toUser);
+                c.Users.Add(user);
 
-            Conversation convo = Conversations.Where(convo => convo.ID == convoID).FirstOrDefault();
-
-            convo.Messages.Add(new Message(DateTime.Now, message.content, convoID));
-
-            return convo.Messages;
+                var result = _context.Conversations.Add(c);
+                _context.SaveChanges();
+                
+                return c.Messages;
+                
+            }
+            
+            _context.Messages.Add(new Message( message.Content, conversation.Id));
+            _context.SaveChanges();
+            return conversation.Messages;
+            
         }
-
+        
     }
 }
