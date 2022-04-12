@@ -34,7 +34,12 @@ const entries = [
 const CashFlow = () => {
 
     function AddEntry(values){
-        //entries.push(values)
+        //input = {
+            //title: values.description,
+            //type: values.type,
+            //value: values.value
+        //}
+        //entries.push(input)
     }
 
 
@@ -63,7 +68,7 @@ const CashFlow = () => {
                         <Spacer/>
                         <VStack>
                         
-                        <RadioGroup defaultValue='Itachi'>
+                        <RadioGroup defaultValue='Itachi' id='type'>
                             <VStack spacing='24px' color="white">
                                 <Radio value='Income'>Income</Radio>
                                 <Radio value='Expense'>Expense</Radio>
@@ -76,7 +81,7 @@ const CashFlow = () => {
 
                 </FormControl>
                 <Button mt={4} colorScheme='teal' onClick={AddEntry(this)}>
-                Submit
+                Add Item
                 </Button>
                 </form>
                 </Box>
