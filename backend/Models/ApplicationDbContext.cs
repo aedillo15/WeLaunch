@@ -5,11 +5,11 @@
 // By:Seth Climenhaga
 
 
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace welaunch_backend.Models.IdentityModels
+
+namespace welaunch_backend.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -18,6 +18,7 @@ namespace welaunch_backend.Models.IdentityModels
         }
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Conversation> Conversations { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

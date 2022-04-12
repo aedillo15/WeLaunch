@@ -7,7 +7,7 @@ import Menu from "./CommonMenu"
 import { AuthContext } from "../../context/AuthContext"
 
 
-import { Container, Input, Text, VStack, Box, Button, HStack, Link as UILink } from '@chakra-ui/react'
+import { Container, Input, Text, VStack, Box, Button, HStack, Link as UILink, Select, RadioGroup, Radio, Stack } from '@chakra-ui/react'
 import CustomInput from "../../components/CustomInput"
 
 export const Signup = () => {
@@ -22,6 +22,7 @@ export const Signup = () => {
     const [nameError, setNameError] = useState("")
     const [emailError, setEmailError] = useState("")
     const [passwordError, setPasswordError] = useState("")
+    const [role, setRole] = useState("Investor")
 
 
     const {register} = useContext(AuthContext)
@@ -72,41 +73,51 @@ export const Signup = () => {
             setPasswordError("")
         }
 
-        if(!fail){
+        if (!fail) {
+
+            console.log("role " + role)
             const registerDto = {
-                'name': name, 
+                'name': name,
                 'email': email, 
-                'password': password, 
+                'role': role,
+                'password': password,
                 'confirmPassword': confirmPassword
             }
 
-            register(registerDto) 
+            register(registerDto)
             console.log("regData " + JSON.stringify(registerDto))
-        }   
+        }
     }
+
 
     return(
         <Layout headerLinks={<Menu />} >
-            <AnimatedPage> 
+            <AnimatedPage>
                 <Box w='100%'  >
                     <Container maxW='container.sm' h="90vh">
                         <VStack h="100%" justifyContent="center" alignItems="center">
                             <VStack spacing={3} w="50%" justifyContent="center" alignItems="center">
                                 <Text fontSize={35} color="#FFFFFF33">Sign up</Text>
                                 <CustomInput placeholder="Name" onChange={(e)=>setName(e.target.value)} error={nameError} />
-                                <CustomInput placeholder="Email" onChange={(e)=>setEmail(e.target.value)} error={emailError} />
+                                <CustomInput placeholder="Email" onChange={(e) => setEmail(e.target.value)} error={emailError} />
+                                <Select onChange={ (e)=>setRole(e.target.value)} placeholder='Select option' color="white" >
+                                    <option color="black" value='Entrepreneur'>Entrepreneur</option>
+                                    <option value='Investor'>Investor</option>
+                                    <option value='Accelerator'>Accelerator</option>
+                                </Select>
+                   
                                 <CustomInput placeholder="Password" onChange={(e)=>setPassword(e.target.value)} error={passwordError} type={show ? 'text' : 'password'}  />
                                 <CustomInput placeholder="Confirm Password" onChange={(e)=>setConfirmPassword(e.target.value)} type={show ? 'text' : 'password'}  />
                                 <Button bg="#F28907" color="white"  _hover={{ bg: '#F2AF00' }} w="100%" onClick={()=>submit()} >Sign up</Button>
                                 <HStack alignItems="start" w="100%">
-                                <Text fontSize={12} color="#FFFFFF88">Alreadyt have an account?</Text> 
+                                <Text fontSize={12} color="#FFFFFF88">Alreadyt have an account?</Text>
                                 <UILink as={Link} fontSize={12} color="#F28907" to="/login" >Login</UILink>
                                 </HStack>
-                            </VStack>        
+                            </VStack>
                         </VStack>
-                    </Container>            
-                </Box>  
-            </AnimatedPage>   
+                    </Container>
+                </Box>
+            </AnimatedPage>
         </Layout>
     )
 }
