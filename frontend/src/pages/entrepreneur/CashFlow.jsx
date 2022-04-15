@@ -6,44 +6,55 @@ import Layout from "../../components/Layout";
 import MainMenu from "./MainMenu"
 import EditableList from 'react-list-editable'
 
-const entries = [
-    {
-        title: "Taxes",
-        type: "Expense",
-        value: 10000
-    },
-    {
-        title: "Employee Salaries",
-        type: "Expense",
-        value: 50000
-    },
-    {
-        title: "Investments",
-        type: "Income",
-        value: 5000
-    },
-    {
-        title: "Sales",
-        type: "Income",
-        value: 75000
-    }
-]
+
+
+
 
 
 
 const CashFlow = () => {
 
-    function AddEntry(values){
-        //input = {
-            //title: values.description,
-            //type: values.type,
-            //value: values.value
-        //}
-        //entries.push(input)
+    const [entries, setEntries] = useState([
+        {
+            title: "Taxes",
+            type: "Expense",
+            value: 10000
+        },
+        {
+            title: "Employee Salaries",
+            type: "Expense",
+            value: 50000
+        },
+        {
+            title: "Investments",
+            type: "Income",
+            value: 5000
+        },
+        {
+            title: "Sales",
+            type: "Income",
+            value: 75000
+        }
+    ])
+
+
+
+
+    const [description, setDescription] = useState()
+    const [amount, setAmount] = useState()
+
+    const submit = () =>{
+
+        const entry = {
+            title: description,
+            type: "Income",
+            value: amount
+        }
+
+        setEntries(entries => [...entries, entry])
+
     }
 
-
-    const [show, setShow] = useState(false)
 
 
 
@@ -61,10 +72,10 @@ const CashFlow = () => {
                         })
                     }
                 <Spacer/>
-                <form onSubmit={AddEntry}>
+                <form>
                 <FormControl as='fieldset' align="center">
                     <HStack>
-                        <Input id='description' placeholder='Description' />
+                        <Input id='description' placeholder='Description' onChange={(e)=>setDescription(e.target.value)}/>
                         <Spacer/>
                         <VStack>
                         
@@ -76,11 +87,11 @@ const CashFlow = () => {
                         </RadioGroup>
                         </VStack>
                         <Spacer/>
-                        <Input id='value' placeholder='Amount' />
+                        <Input placeholder='Amount' onChange={(e)=>setAmount(e.target.value)}/>
                     </HStack>
 
                 </FormControl>
-                <Button mt={4} colorScheme='teal' onClick={AddEntry(this)}>
+                <Button mt={4} colorScheme='teal' onClick={()=>submit()}>
                 Add Item
                 </Button>
                 </form>
