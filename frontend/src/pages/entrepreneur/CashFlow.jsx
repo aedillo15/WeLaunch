@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {RadioGroup, Radio, FormHelperText, FormControl, FormLabel, Input, Box, Button, Container, HStack, VStack, Text, Image, Flex, Spacer, Menu, MenuButton, MenuList, MenuOptionGroup,MenuItemOption } from "@chakra-ui/react"
 import AnimatedPage from "../../components/AnimatedPsge"
 import { Link } from "react-router-dom"
@@ -38,20 +38,43 @@ const CashFlow = () => {
     ])
 
 
+    const calculateTotal = () => {
+
+
+        let sum = 0
+        for (var i=0; i< entries.length; i++){
+            console.log(sum)
+            if (entries[i].type == "Income"){
+                sum += parseInt(entries[i].value)
+            } else {
+                sum -= entries[i].value
+            }
+        }
+        return sum;
+    }
 
 
     const [description, setDescription] = useState()
-    const [amount, setAmount] = useState()
+    const [amount, setAmount] = useState(0)
+    const [radio, setRadio] = useState("")
+    const [total, setTotal] = useState(calculateTotal())
+    
+    
 
     const submit = () =>{
 
         const entry = {
             title: description,
-            type: "Income",
+            type: radio,
             value: amount
         }
 
-        setEntries(entries => [...entries, entry])
+        if (radio != "" && description != "" && amount > 0){
+            setEntries(entries => [...entries, entry])
+
+
+        }
+
 
     }
 
@@ -71,6 +94,21 @@ const CashFlow = () => {
                            return  <ListItem entry={entry} mb={5} />
                         })
                     }
+            <Flex h="60px" p="5" bg="#FFFFFF22" alignItems="center" marginBottom={2}>
+                <Image  />
+                <Text color="orange" pr="5" w="14%">Net Income</Text>
+                <Spacer/>
+                <Text color="white" pr="5"></Text>
+                <Spacer/>
+            {total < 0
+                ? <Text color="red" pr="5">-${total}</Text>
+                : <Text color="lightgreen" pr="5">${total}</Text>
+            }
+
+            
+
+        </Flex>
+
                 <Spacer/>
                 <form>
                 <FormControl as='fieldset' align="center">
@@ -79,10 +117,10 @@ const CashFlow = () => {
                         <Spacer/>
                         <VStack>
                         
-                        <RadioGroup defaultValue='Itachi' id='type'>
+                        <RadioGroup defaultValue='Itachi'>
                             <VStack spacing='24px' color="white">
-                                <Radio value='Income'>Income</Radio>
-                                <Radio value='Expense'>Expense</Radio>
+                                <Radio value='Income' checked={radio === "Income"} onChange={(e)=>setRadio(e.target.value)}>Income</Radio>
+                                <Radio value='Expense' checked={radio === "Expense"} onChange={(e)=>setRadio(e.target.value)}>Expense</Radio>
                             </VStack>
                         </RadioGroup>
                         </VStack>
