@@ -71,6 +71,7 @@ const CashFlow = () => {
 
         if (radio != "" && description != "" && amount > 0){
             setEntries(entries => [...entries, entry])
+            setTotal(calculateTotal() + (radio == "Income" ? Number(amount) : (Number(amount * -1))))
 
 
         }
