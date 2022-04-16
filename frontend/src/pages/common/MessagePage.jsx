@@ -1,16 +1,88 @@
-import { Box, Container, Flex, HStack, Spacer, Text, VStack, Input, Button } from "@chakra-ui/react";
-import React from "react"
+import { Box, Container, Flex, HStack, Spacer, Text, VStack, Input, Button, useSafeLayoutEffect } from "@chakra-ui/react";
+import React, { useContext, useEffect, useState} from "react"
 import AnimatedPage from "../../components/AnimatedPsge";
 
 const contacts = ["One", "Tweo", "Three", "Four" ]
 import Layout from "../../components/Layout";
+import { ApiUrls } from "../../constants/ApiConstants";
 import InvestorMenu from "../investor/InvestorMenu";
 import Menu from "./CommonMenu";
+import { AuthContext } from "../../context/AuthContext"
+import axios from "axios"
 
 const msgs = [ {content : "Hello" , date : "10/7/12"}, {content : "Yoo" , date : "10/7/12"}, {content : "Hi" , date : "10/7/12"}]
 
 
-const MessagesPage = ()=>{
+const MessagesPage = () => {
+
+    const { bearerToken } = useContext(AuthContext)
+
+
+    const [msgToSend, setMsgToSend] = useState("");
+    const [messages, setMessages] = useState([])
+
+    const sendMsg = () => {
+        console.log("Send Message Called")
+
+      
+
+        if (bearerToken == null) {
+            console.log("No Token " + bearerToken)
+            return
+        }
+
+
+        const msgDTO = {
+            ConvoID: null,
+            content: msgToSend
+        }
+
+        if (msgToSend !== "") {
+            let config = {
+                method: 'post',
+                url: ApiUrls.sendMsg,
+                headers: {
+                    'Authorization': 'Bearer ' + bearerToken
+                },
+                data: msgDTO
+            }
+
+            axios(config)
+                .then(resp => {
+                    console.log(JSON.stringify(resp))
+                })
+        }
+        
+    }
+
+    useEffect(() => {
+
+       
+
+        if (bearerToken == null)
+            return
+
+        let config = {
+            method: 'get',
+            url: ApiUrls.getMessages,
+            headers: {
+                'Authorization': 'Bearer ' + bearerToken
+            }
+        }
+
+        axios(config)
+            .then(resp => {
+                if (resp.messages != null) {
+                    setMessages(resp.messages)
+                }
+                else {
+                    setMessages([]);
+                }
+                    
+            })
+    }, [])
+
+
     return(
         <Layout headerLinks={<InvestorMenu />} >
             <AnimatedPage>
@@ -33,7 +105,7 @@ const MessagesPage = ()=>{
                         <Flex  w="100%"  h="100%" direction="column">
                             <VStack w="100%" p="5" h="100%">
                             {
-                                msgs.map( (msg, idx) =>{
+                                messages.map( (msg, idx) =>{
                                     console.log(idx)
                                     return(
                                         <MSG msg={msg} oddEven={((idx % 2) === 0)} />
@@ -42,8 +114,8 @@ const MessagesPage = ()=>{
                             }
                             </VStack>
                             <HStack pt="1em" width="100%" p={5}>
-                                <Input bg="white" />      
-                                <Button bg="blue.400" color="white" w="5em">Send</Button>
+                                <Input onChange={ (e)=>setMsgToSend(e.target.value)} bg="white" />
+                                <Button onClick={() => sendMsg()} bg="blue.400" color="white" w="5em">Send</Button>
                             </HStack> 
                         </Flex>
 

@@ -5,4 +5,7 @@ export const ApiUrls = {
     login: `${baseUrl}/connect/token`,
     register: `${baseApiUrl}/account/register`,
     logOut: `${baseApiUrl}/account/logout`,
+    user: `${baseApiUrl}/account/user`,
+    sendMsg: `${baseApiUrl}/message/send`,
+    getMessages: `${baseApiUrl}/messages`
 }   

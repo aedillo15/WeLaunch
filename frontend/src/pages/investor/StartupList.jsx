@@ -59,10 +59,15 @@ const startups = [
 const StartUpList = () => {
 
 
-    const { getBearerToken } = useContext(AuthContext)  
+    const ctx = useContext(AuthContext)
+
+    var token = null
+
+    if (ctx !== undefined)
+        token = ctx.bearerToken;
 
     const callAPI = () => {
-        const token = getBearerToken()
+ 
         console.log('Token ' + token)
         let config = {
             method: 'get',
@@ -188,5 +193,5 @@ const ListItem = ({startup}) =>{
     )
 }
 
-// export default withRequireAuth(StartUpList);
-export default StartUpList;
+ export default withRequireAuth(StartUpList);
+/*export default StartUpList;*/

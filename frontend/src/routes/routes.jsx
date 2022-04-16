@@ -13,6 +13,7 @@ import Incorporate from '../pages/entrepreneur/Incorporate';
 import FrontPage from '../pages/common/FrontPage';
 import StartUpList from '../pages/investor/StartupList';
 import MessagesPage from '../pages/common/MessagePage';
+import { OnBoardingStartupPage } from '../pages/entrepreneur/OnBoardingStartupPage';
 
 
 export default function OpenRoutes(){
@@ -30,7 +31,8 @@ export default function OpenRoutes(){
             <Route  path="/Incorporate" element={<Incorporate />} />
             <Route  path="/cashflow" element={<CashFlow />} />
             <Route  path="/Product" element={<Product />} />
-            <Route  path="/entrepreneur" element={<MainMenu />} />
+            <Route path="/entrepreneur" element={<MainMenu />} />
+            <Route path="/onboard" element={ <OnBoardingStartupPage /> } />
 
             <Route  path="/messages" element={<MessagesPage />} />
         
