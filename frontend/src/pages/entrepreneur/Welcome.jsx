@@ -19,7 +19,9 @@ const Welcome = () => {
         <MainMenu>
             <Text fontSize={45} color="#e2f7d2">Welcome to WeLaunch!</Text>
             <Text fontSize={15} color="#e2f7d2">On the left of the page, there are a list of items relevant to starting your business</Text>
-            <Text fontSize={15} color="#e2f7d2">Each page will provide information </Text>
+            <Text fontSize={15} color="#e2f7d2">Each page will provide information on steps to be taken and factors to be considered for each decision you will make</Text>
+
+
 
         </MainMenu>
 

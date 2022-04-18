@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Container, Input, Text, VStack, Box, Button, HStack, Link as UILink } from '@chakra-ui/react'
+import { Spacer, Container, Input, Text, VStack, Box, Button, HStack, Link as UILink } from '@chakra-ui/react'
 import AnimatedPage from "../../components/AnimatedPsge"
 import { Link } from "react-router-dom"
 import { useNavigate } from 'react-router-dom';
@@ -19,30 +19,33 @@ const MainMenu = (props) => {
     return(
         <Layout>
             <AnimatedPage> 
-                <Box w='100%' h='100%' bgGradient='linear(to-br, #4D748C, #1B3059)' >
+                <Box w='100%' h='1000%' bgGradient='linear(to-br, #4D748C, #1B3059)' >
                     <Container maxW='container.xxl' h="90vh">
                         
-                        <VStack justifyContent="left" alignItems="toleftp">
+                        <VStack justifyContent="left" alignItems="top">
                             <HStack>
-                            <VStack spacing={3} w="25%" h="100%" justifyContent="center" alignItems="center">
-                                <Text align="center" fontSize={35} color="#FFFFFF33">The Actual Business</Text>
+                                
+                                <VStack spacing={3} w="25%" h="100%" justifyContent="center" alignItems="center">
+                                    <Text align="center" fontSize={35} color="#FFFFFF33">The Actual Business</Text>
 
-                                <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" onClick={()=>navigate('../welcome')}>Welcome</Button>
-                                <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" onClick={()=>navigate('../incorporate')}>Incorporate</Button>
-                                <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" onClick={()=>navigate('../product')}>Product</Button>
-                                <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" onClick={()=>navigate('../cashflow')}>Cash Flow</Button>
-                                <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" >Sale Method</Button>
-                                <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" >More</Button>
-                                <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" >Buttons</Button>
-                                <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" >Here</Button>
+                                    <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" onClick={()=>navigate('../welcome')}>Welcome</Button>
+                                    <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" onClick={()=>navigate('../incorporate')}>Incorporate</Button>
+                                    <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" onClick={()=>navigate('../product')}>Product</Button>
+                                    <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" onClick={()=>navigate('../cashflow')}>Cash Flow</Button>
+                                    <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" >Sale Method</Button>
+                                    <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" >More</Button>
+                                    <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" >Buttons</Button>
+                                    <Button bg="#AAC1E6" color="darkblue"  _hover={{ bg: '#89a1c7' }} w="100%" >Here</Button>
+                                    <Spacer h="100%"/>
+                                    <Spacer h="100%"/>
+                                    <Spacer h="100%"/>
 
-                            </VStack>   
-                            <Box h="30%" w="80%" pl="20">
-                                <VStack>
-
-                                    {props.children}
-                                </VStack>
-                            </Box>
+                                </VStack>   
+                                <Box h="0%" w="80%" pl="20">
+                                    <VStack>
+                                        {props.children}
+                                    </VStack>
+                                </Box>
                             </HStack>
                             
                         </VStack>
