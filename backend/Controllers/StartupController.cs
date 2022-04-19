@@ -4,6 +4,7 @@
 // Created:16-04-2022
 // By:Seth Climenhaga
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +32,9 @@ namespace welaunch_backend.Controllers
         public async Task<IActionResult> AddStartup([FromBody]StartupDto startupDto)
         {
             var user = await _userManager.GetUserAsync(User);
+            
+            Console.WriteLine("ID " + user.Id);
+            Console.WriteLine("ID " + startupDto);
 
             startupDto.OwnerId = user.Id;
 
@@ -44,6 +48,8 @@ namespace welaunch_backend.Controllers
         public async Task<IActionResult> GetAllStartups()
         {
             var startups = _startupRepository.Startups;
+            
+            
 
             return Ok(startups);
         }

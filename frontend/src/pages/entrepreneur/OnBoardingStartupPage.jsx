@@ -43,16 +43,16 @@ export const OnBoardingStartupPage = () => {
         let startupData = {
             'name': name,
             'about': about,
-            'numEmp': numEmp,
+            'numEmployees': numEmp,
             'sector': sector,
-            'money': money,
+            'MoneyRaised': money,
             'ownerID': user.user.id
         }
 
 
         let config = {
             method: 'post',
-            url: "https://localhost:44390/api/TestAuth",
+            url: "https://localhost:44390/api/startup",
             headers: {
                 'Authorization': 'Bearer ' + bearerToken
             },
@@ -62,7 +62,7 @@ export const OnBoardingStartupPage = () => {
         axios(config)
             .then(resp => {
                 console.log(JSON.stringify(resp))
-                navigate("/entrepeneur")
+                navigate("/Welcome")
             })
     }
 

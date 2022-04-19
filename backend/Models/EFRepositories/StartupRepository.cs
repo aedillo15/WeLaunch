@@ -24,6 +24,7 @@ namespace welaunch_backend.Models.EFRepositories
         
         public void AddStartup(StartupDto startupDto)
         {
+            var id = Guid.Parse(startupDto.OwnerId);
             var startup = new Startup.Startup
             {
                 Id = Guid.NewGuid(),
@@ -32,6 +33,7 @@ namespace welaunch_backend.Models.EFRepositories
                 MoneyRaised = startupDto.MoneyRaised,
                 NumEmployees = startupDto.NumEmployees,
                 Sector = startupDto.Sector,
+                OwnerId = id
             };
             
             _context.Startups.Add(startup);

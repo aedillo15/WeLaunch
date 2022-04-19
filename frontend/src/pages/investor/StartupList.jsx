@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { Box, 
     Button, 
     Container, 
@@ -36,29 +36,29 @@ import { withRequireAuth } from "../../components/RequireAuth"
 import InvestorMenu from "./InvestorMenu"
 
 
-const startups = [
-    {
-        name: "Startup 1",
-        empNo: 5
-    },
-    {
-        name: "Startup 2",
-        empNo: 10
-    },
-    {
-        name: "Startup 3",
-        empNo: 6
-    },
-    {
-        name: "Startup 4",
-        empNo: 3
-    }
-]
+//const startups = [
+//    {
+//        name: "Startup 1",
+//        empNo: 5
+//    },
+//    {
+//        name: "Startup 2",
+//        empNo: 10
+//    },
+//    {
+//        name: "Startup 3",
+//        empNo: 6
+//    },
+//    {
+//        name: "Startup 4",
+//        empNo: 3
+//    }
+//]
 
 
 const StartUpList = () => {
 
-
+    const [startups, setStartups] = useState([])
     const ctx = useContext(AuthContext)
 
     var token = null
@@ -82,6 +82,23 @@ const StartUpList = () => {
                 console.log(JSON.stringify(resp))
             })
     }
+
+    useEffect(() => {
+        let config = {
+            method: 'get',
+            url: "https://localhost:44390/api/startup",
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }
+
+        axios(config)
+            .then(resp => {
+                console.log(JSON.stringify(resp.data))
+                setStartups(resp.data)
+            })
+    },[])
+
 
     const openDrawer = () =>{
         onClick(onOpen)
@@ -125,9 +142,13 @@ const StartUpList = () => {
                 </SearchBar>
                 <Box  h="100%" pt={5}> 
                     {
-                        startups.map( startup =>{
-                           return  <ListItem startup={startup} mb={5} />
-                        })
+                        startups.length !== 0 ? (
+                            startups.map( startup =>{
+                               return  <ListItem startup={startup} mb={5} />
+                            })
+
+                        ) : <Box>Loading...</Box>
+                       
                     }
                 </Box>
             </Container> 
@@ -144,7 +165,8 @@ const ListItem = ({startup}) =>{
 
     const{
         name,
-        empNo
+        numEmployees,
+        sector
     }  = startup
 
     const openModal = (event) =>{
@@ -156,8 +178,10 @@ const ListItem = ({startup}) =>{
     return(
         <Flex h="60px" p="5" bg="#FFFFFF22" alignItems="center" marginBottom={2} _hover={{shadow:"2xl", mt:"4", mb:"4", bg:"#FFFFFF55", color:"white", cursor:"pointer"} } btnRef={btnRef} onClick={onOpenDrawer} >
             <Image  />
-            <Text color="white" pr="5">{name}</Text>
-            <Text color="white" pr="5">No. Employees {empNo}</Text>
+            <Text width="8em" color="white" pr="5">{name}</Text>
+            <Text width="12em" color="white" pr="5">No. Employees: {numEmployees}</Text>
+            <Text width="12em" color="white" pr="5">Sector: {sector}</Text>
+     
             <Spacer />
             <Button variant="primary" onClick={openModal}>Message</Button>
 
