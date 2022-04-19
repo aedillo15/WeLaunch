@@ -11,7 +11,7 @@ import MainMenu from "./MainMenu"
 
 const Product = () => {
 
-    const [show, setShow] = useState(false)
+    
 
     return(
 
