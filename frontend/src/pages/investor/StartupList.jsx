@@ -22,7 +22,7 @@ import { Box,
     Drawer,
     DrawerContent,
     DrawerHeader,
-    DrawerBody,
+    DrawerBody,  Input,  InputGroup, InputLeftElement, Icon
 } from "@chakra-ui/react"
 import Layout from "../../components/Layout"
 import SearchBar from "../../components/SearchBar"
@@ -35,33 +35,17 @@ import StartupDetail from "./StartupDetail"
 import { withRequireAuth } from "../../components/RequireAuth"
 import InvestorMenu from "./InvestorMenu"
 
-
+import { FaSearch } from "react-icons/fa"
 const StartUpList = () => {
 
     const [startups, setStartups] = useState([])
     const ctx = useContext(AuthContext)
+    const [searchTerm, setSearchTerm] = useState() 
 
     var token = null
 
     if (ctx !== undefined)
         token = ctx.bearerToken;
-
-    const callAPI = () => {
- 
-        console.log('Token ' + token)
-        let config = {
-            method: 'get',
-            url: "https://localhost:44390/api/TestAuth",
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        }
-
-        axios(config)
-            .then(resp => {
-                console.log(JSON.stringify(resp))
-            })
-    }
 
     useEffect(() => {
         let config = {
@@ -77,7 +61,32 @@ const StartUpList = () => {
                 console.log(JSON.stringify(resp.data))
                 setStartups(resp.data)
             })
-    },[])
+    }, [])
+
+    const onSearchHandler = () => {
+        console.log("onSearchHandler " + searchTerm)
+        if (searchTerm == "") {
+            let config = {
+                method: 'get',
+                url: "https://localhost:44390/api/startup",
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+
+            axios(config)
+                .then(resp => {
+                    console.log(JSON.stringify(resp.data))
+                    setStartups(resp.data)
+                })
+        }
+      
+        else {
+            const newList = startups.filter(startup => startup.name.toLowerCase().includes(searchTerm.toLowerCase()) )
+            console.log("New List " + newList )
+            setStartups(newList)
+        }
+    }
 
 
     const openDrawer = () =>{
@@ -87,7 +96,21 @@ const StartUpList = () => {
     return(
         <Layout headerLinks={<InvestorMenu />}>
             <Container maxW='container.lg' h="90vh" pt={10} >
-                <SearchBar>
+                <Flex bg="brand.glass" minWidth="100%" alignItems="center" justifyContent="start" boxShadow='dark-lg' borderRadius={5} h="6vh" p={5}>
+                    <HStack>
+                        <InputGroup>
+                            <InputLeftElement
+                                pointerEvents='none'
+                                children={<Icon as={FaSearch} color='gray.300' />}
+                            />
+                            <Input w="20vw" bg="brand.glass" color="white" _hover={{ bg: '#FFFFFF33', }} focusBorderColor='#76D3E099' variant='filled' placeholder='Search' mr={2} onChange={(e) => setSearchTerm(e.target.value)} />
+                        </InputGroup>
+
+                    </HStack>
+
+                    <Button variant="secondary" mr={50} onClick={() => onSearchHandler()}>Search</Button>
+
+            
                     <HStack>
                         <Menu closeOnSelect={false}>
                             <MenuButton as={Button} rightIcon={<FaChevronDown />} bg="brand.glass" color="white" _focus={{bg:'brand.lightText'}} _hover={{bg:'brand.lightText'}} >
@@ -118,7 +141,7 @@ const StartUpList = () => {
                         </Menu>
 
                     </HStack>
-                </SearchBar>
+               </Flex>
                 <Box  h="100%" pt={5}> 
                     {
                         startups.length !== 0 ? (

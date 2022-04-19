@@ -17,6 +17,8 @@ namespace welaunch_backend.Models
         
         public Guid FromID { get; set; }
 
+        public DateTime date { get; set; }
+
         public Message( string content, Guid conversationId)
         {
             ID =  Guid.NewGuid();

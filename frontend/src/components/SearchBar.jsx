@@ -3,7 +3,7 @@ import { Button, HStack,Input, Flex, InputGroup, InputLeftElement, Icon } from "
 
 import {FaSearch} from "react-icons/fa"
 
-const SearchBar = ({children}) =>{
+const SearchBar = ({ children, onChange, onClick }) => {
 
     return(
         <Flex bg="brand.glass" minWidth="100%" alignItems="center" justifyContent="start" boxShadow='dark-lg' borderRadius={5} h="6vh" p={5}>
@@ -13,7 +13,7 @@ const SearchBar = ({children}) =>{
                         pointerEvents='none'
                         children={<Icon as={FaSearch} color='gray.300' />}
                     />
-                    <Input w="20vw" bg="brand.glass" color="white" _hover={{ bg: '#FFFFFF33',  }} focusBorderColor='#76D3E099' variant='filled' placeholder='Search' mr={2}/>
+                    <Input w="20vw" bg="brand.glass" color="white" _hover={{ bg: '#FFFFFF33', }} focusBorderColor='#76D3E099' variant='filled' placeholder='Search' mr={2} onChange={onChange} onClick={onClick}/>
                 </InputGroup>
                 
             </HStack>

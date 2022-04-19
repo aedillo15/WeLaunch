@@ -12,18 +12,20 @@ const Menu =()=>{
             <UILink as={Link } to='/signup' >
                 Signup
             </UILink>
-            <UILink as={Link} to='/investor' >
-                Investor
-            </UILink>
-            <UILink as={Link} to='/entrepreneur' >
-                Entrepreneur
-            </UILink>
-            <UILink as={Link} to='/onboard' >
-                OnBoard
-            </UILink>
         </HStack>
 
     )
 }
 
 export default Menu;
+
+
+      //<UILink as={Link} to='/investor' >
+      //          Investor
+      //      </UILink>
+      //      <UILink as={Link} to='/entrepreneur' >
+      //          Entrepreneur
+      //      </UILink>
+      //      <UILink as={Link} to='/onboard' >
+      //          OnBoard
+      //      </UILink>

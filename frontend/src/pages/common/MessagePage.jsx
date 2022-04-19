@@ -2,15 +2,11 @@ import { Box, Container, Flex, HStack, Spacer, Text, VStack, Input, Button, useS
 import React, { useContext, useEffect, useState} from "react"
 import AnimatedPage from "../../components/AnimatedPsge";
 
-const contacts = ["One", "Tweo", "Three", "Four" ]
 import Layout from "../../components/Layout";
 import { ApiUrls } from "../../constants/ApiConstants";
 import InvestorMenu from "../investor/InvestorMenu";
-import Menu from "./CommonMenu";
 import { AuthContext } from "../../context/AuthContext"
 import axios from "axios"
-
-const msgs = [ {content : "Hello" , date : "10/7/12"}, {content : "Yoo" , date : "10/7/12"}, {content : "Hi" , date : "10/7/12"}]
 
 
 const MessagesPage = () => {
@@ -136,7 +132,7 @@ const MessagesPage = () => {
                             <VStack w="100%" p="5" h="100%" overflowY="scroll">
                                 {
                                     messages.length !==0 ?(
-                                        selectedConversation.messages.map( (msg, idx) =>{
+                                        messages.map( (msg) =>{
                                             return(
                                               <MSG msg={msg} oddEven={(user.id !== msg.fromID)} />
                                             )
@@ -186,7 +182,6 @@ const MSG = ({msg, oddEven}) =>{
        
     )
 }
-
 
 
 export default MessagesPage;

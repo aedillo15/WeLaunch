@@ -49,8 +49,6 @@ namespace welaunch_backend.Controllers
         {
             var startups = _startupRepository.Startups;
             
-            
-
             return Ok(startups);
         }
         

@@ -47,6 +47,7 @@ namespace welaunch_backend.Models.EFRepositories
                 var c = new Conversation();
                 var m = new Message(message.Content, c.Id);
                 m.FromID = Guid.Parse(user.Id);
+                m.date = DateTime.Now;
                 c.Messages.Add(m);
                 c.Users.Add(toUser);
                 c.Users.Add(user);
@@ -61,6 +62,7 @@ namespace welaunch_backend.Models.EFRepositories
             
             var mess = new Message(message.Content, conversation.Id);
             mess.FromID = Guid.Parse(user.Id);
+            mess.date = DateTime.Now;
             _context.Messages.Add(mess);
             _context.SaveChanges();
             return conversation.Messages;
