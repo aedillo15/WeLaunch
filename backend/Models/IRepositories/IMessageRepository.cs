@@ -12,6 +12,7 @@ namespace welaunch_backend.Models.IRepositories
         public IEnumerable<Conversation> Conversations { get; }
 
         public  IEnumerable<Conversation> GetConversations(string userID);
+        public IEnumerable<Conversation> GetConversation(string userId, string otherUserId);
         public  IEnumerable<Message> AddToConversation(MessageDTO message, ApplicationUser user, ApplicationUser toUser);
 
     }

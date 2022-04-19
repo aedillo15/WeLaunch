@@ -14,6 +14,8 @@ namespace welaunch_backend.Models
         public string Content { get; set; }
 
         public Guid ConversationId { get; set; }
+        
+        public Guid FromID { get; set; }
 
         public Message( string content, Guid conversationId)
         {

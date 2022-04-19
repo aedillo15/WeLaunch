@@ -36,26 +36,6 @@ import { withRequireAuth } from "../../components/RequireAuth"
 import InvestorMenu from "./InvestorMenu"
 
 
-//const startups = [
-//    {
-//        name: "Startup 1",
-//        empNo: 5
-//    },
-//    {
-//        name: "Startup 2",
-//        empNo: 10
-//    },
-//    {
-//        name: "Startup 3",
-//        empNo: 6
-//    },
-//    {
-//        name: "Startup 4",
-//        empNo: 3
-//    }
-//]
-
-
 const StartUpList = () => {
 
     const [startups, setStartups] = useState([])
@@ -137,14 +117,13 @@ const StartUpList = () => {
                             </MenuList>
                         </Menu>
 
-                        <Button onClick={() =>callAPI()}>callAPI</Button>
                     </HStack>
                 </SearchBar>
                 <Box  h="100%" pt={5}> 
                     {
                         startups.length !== 0 ? (
                             startups.map( startup =>{
-                               return  <ListItem startup={startup} mb={5} />
+                                return <ListItem startup={startup} token={ token } mb={5} />
                             })
 
                         ) : <Box>Loading...</Box>
@@ -157,7 +136,7 @@ const StartUpList = () => {
 }
 
 
-const ListItem = ({startup}) =>{
+const ListItem = ({ startup, token}) =>{
 
     const { isOpen: isOpenModal, onOpen : onOpenModal, onClose : onCloseModal } = useDisclosure()
     const { isOpen : isDrawerOpen, onOpen : onOpenDrawer, onClose: onCloseDrawer } = useDisclosure()
@@ -191,7 +170,7 @@ const ListItem = ({startup}) =>{
                     <ModalHeader>{name}</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody minH="50vh" p={0}>
-                        <MsgPopup />
+                        <MsgPopup startup={startup} bearerToken={token } />
                     </ModalBody>
                 </ModalContent>
             </Modal>

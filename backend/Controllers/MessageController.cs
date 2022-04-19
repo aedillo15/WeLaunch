@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -45,6 +46,19 @@ namespace welaunch_backend.Controllers
             var conversations = _messageRepository.GetConversations(user.Id);
 
             return Ok(conversations);
+        }
+        
+        [HttpPost("api/conversation")]
+        [Authorize(AuthenticationSchemes = OpenIddictValidationAspNetCoreDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> GetMessages([FromBody]IdDTO idDto)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var conversation = _messageRepository.GetConversation(user.Id, idDto.Id);
+            
+            if(conversation.Count() == 0)
+                return Ok(null);
+
+            return Ok(conversation);
         }
 
     }

@@ -28,6 +28,15 @@ namespace welaunch_backend.Models.EFRepositories
             );
             return null;
         }
+        
+        public IEnumerable<Conversation> GetConversation(string userId, string otherUserId)
+        {
+            return Conversations.Where(c => 
+                c.Users.Any(user => user.Id == userId) && c.Users.Any(user => user.Id == otherUserId)
+            );
+            return null;
+        }
+
 
         public IEnumerable<Message> AddToConversation(MessageDTO message, ApplicationUser user, ApplicationUser toUser)
         {
@@ -36,9 +45,12 @@ namespace welaunch_backend.Models.EFRepositories
             if (conversation == null)
             {
                 var c = new Conversation();
-                c.Messages.Add(new Message(message.Content, c.Id));
+                var m = new Message(message.Content, c.Id);
+                m.FromID = Guid.Parse(user.Id);
+                c.Messages.Add(m);
                 c.Users.Add(toUser);
                 c.Users.Add(user);
+                
 
                 var result = _context.Conversations.Add(c);
                 _context.SaveChanges();
@@ -47,7 +59,9 @@ namespace welaunch_backend.Models.EFRepositories
                 
             }
             
-            _context.Messages.Add(new Message( message.Content, conversation.Id));
+            var mess = new Message(message.Content, conversation.Id);
+            mess.FromID = Guid.Parse(user.Id);
+            _context.Messages.Add(mess);
             _context.SaveChanges();
             return conversation.Messages;
             

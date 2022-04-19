@@ -15,16 +15,14 @@ const msgs = [ {content : "Hello" , date : "10/7/12"}, {content : "Yoo" , date :
 
 const MessagesPage = () => {
 
-    const { bearerToken } = useContext(AuthContext)
-
+    const { bearerToken, user } = useContext(AuthContext)
 
     const [msgToSend, setMsgToSend] = useState("");
+    const [conversations, setConversations] = useState([])
+    const [selectedConversation, setSelectedConversation] = useState({ messages: [] })
     const [messages, setMessages] = useState([])
 
     const sendMsg = () => {
-        console.log("Send Message Called")
-
-      
 
         if (bearerToken == null) {
             console.log("No Token " + bearerToken)
@@ -33,7 +31,8 @@ const MessagesPage = () => {
 
 
         const msgDTO = {
-            ConvoID: null,
+            ConvoID: selectedConversation.id,
+            ToUserId: selectedConversation.users[1].id,
             content: msgToSend
         }
 
@@ -49,16 +48,15 @@ const MessagesPage = () => {
 
             axios(config)
                 .then(resp => {
-                    console.log(JSON.stringify(resp))
+                    console.log("Messages " + JSON.stringify(resp.data))
+                    setMessages(resp.data)
+                    getMessages()
                 })
         }
         
     }
 
     useEffect(() => {
-
-       
-
         if (bearerToken == null)
             return
 
@@ -72,16 +70,46 @@ const MessagesPage = () => {
 
         axios(config)
             .then(resp => {
-                if (resp.messages != null) {
-                    setMessages(resp.messages)
+                if (resp != null) {
+                    setConversations(resp.data)
                 }
                 else {
-                    setMessages([]);
+                    setConversations([]);
                 }
                     
             })
     }, [])
 
+
+    const getMessages = () => {
+        if (bearerToken == null)
+            return
+
+        let config = {
+            method: 'get',
+            url: ApiUrls.getMessages,
+            headers: {
+                'Authorization': 'Bearer ' + bearerToken
+            }
+        }
+
+        axios(config)
+            .then(resp => {
+                if (resp != null) {
+                    setConversations(resp.data)
+
+                }
+                else {
+                    setConversations([]);
+                }
+
+            })
+    }
+
+    const setSelected = (c) =>{
+        setSelectedConversation(c)
+        setMessages(c.messages)
+    }
 
     return(
         <Layout headerLinks={<InvestorMenu />} >
@@ -92,26 +120,29 @@ const MessagesPage = () => {
                         <VStack w="20vw" h="100%" alignItems="start" bg="#FFFFFF" p="5" shadow="xl" borderRadius="1em">
                             <Text fontSize={30}>Messages</Text>
                             {
-                                contacts.map( contact=>{
-                                    return(
-                                        <Box borderBottom="thin solid #22222277" w="100%" _hover={{bg:"brand.primary", color: "white", cursor:"pointer"}} p="2" borderRadius={5}>
-                                            <Text fontWeight="bold">{contact}</Text> 
-                                        </Box>
+                                conversations.length !== 0 ?(
+                                    conversations.map(conversation => {
+                                        return (
+                                            <Box borderBottom="thin solid #22222277" w="100%" _hover={{ bg: "brand.primary", color: "white", cursor: "pointer" }} p="2" borderRadius={5} onClick={() => setSelected(conversation) }>
+                                                <Text fontWeight="bold">{conversation.users[1].userName}</Text>
+                                             </Box>
                                        
-                                    )
-                                })
+                                        )
+                                    })
+                                ) : null
                             }
                         </VStack>
                         <Flex  w="100%"  h="100%" direction="column">
-                            <VStack w="100%" p="5" h="100%">
-                            {
-                                messages.map( (msg, idx) =>{
-                                    console.log(idx)
-                                    return(
-                                        <MSG msg={msg} oddEven={((idx % 2) === 0)} />
-                                    )
-                                })
-                            }
+                            <VStack w="100%" p="5" h="100%" overflowY="scroll">
+                                {
+                                    messages.length !==0 ?(
+                                        selectedConversation.messages.map( (msg, idx) =>{
+                                            return(
+                                              <MSG msg={msg} oddEven={(user.id !== msg.fromID)} />
+                                            )
+                                        })
+                                    ):null
+                                    }
                             </VStack>
                             <HStack pt="1em" width="100%" p={5}>
                                 <Input onChange={ (e)=>setMsgToSend(e.target.value)} bg="white" />
@@ -129,7 +160,6 @@ const MessagesPage = () => {
 
 const MSG = ({msg, oddEven}) =>{
 
-    console.log(msg + oddEven)
 
     const{
         content,
@@ -156,6 +186,7 @@ const MSG = ({msg, oddEven}) =>{
        
     )
 }
+
 
 
 export default MessagesPage;

@@ -84,7 +84,7 @@ namespace welaunch_backend
                 options.DefaultChallengeScheme = OpenIddictConstants.Schemes.Bearer;
             });
 
-
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddSignInManager()

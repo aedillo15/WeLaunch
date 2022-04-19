@@ -9,7 +9,7 @@ import {FaChevronDown} from "react-icons/fa"
 import { AuthContext } from "../../context/AuthContext"
 
 
-import { Container, Input, Text, VStack, Box, Button, HStack, Link as UILink,InputGroup, InputRightElement, IconButton} from '@chakra-ui/react'
+import { Container, Text, VStack, Box, Button, HStack, Link as UILink,} from '@chakra-ui/react'
 
 export const Login = ()=>{
 
@@ -73,10 +73,10 @@ export const Login = ()=>{
     useEffect(() => {
         if (user !== undefined && user.userRoles !== undefined) {
         
-            if (user.userRoles[0] === "Admin")           { navigate("/investor") }
-            else if (user.userRoles === "Entrepreneur")  { navigate("/entrepreneur") }
-            else if (user.userRoles === "Accelerator")   { navigate("/accelerator") }
-            else                                         { navigate("/login") }
+            if (user.userRoles[0] === "Investor")           { navigate("/investor") }
+            else if (user.userRoles[0] === "Entrepreneur")  { navigate("/onboard") }
+            else if (user.userRoles[0] === "Accelerator")   { navigate("/accelerator") }
+            else                                            { navigate("/login") }
     
         }
     }, [user]);
